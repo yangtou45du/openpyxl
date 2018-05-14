@@ -9,14 +9,12 @@ wb=load_workbook("testData1.xlsx")#默认打开文件，可读写
 #获取工作表
 sheetNames=wb.sheetnames#h获取所有sheet名称
 #print(sheetNames)
-a_sheet=wb['Sheet1']#根据sheet名获取sheet
+#a_sheet=wb['Sheet1']#根据sheet名获取sheet
 #print a_sheet
-title=a_sheet.title#获取title名
+#title=a_sheet.title#获取title名
 #print(title)
 sheet=wb.active#获取当前正在显示的sheet
 #print sheet
-
-
 #获取单元格值
 b4=sheet['B4']
 print b4.column#获取列
@@ -63,5 +61,29 @@ wb.create_sheet('data',index=1)# 被安排s到第二个工作表，index=0就是第一个位置
 print(wb.sheetnames)#获取表名
 #wb.remove(sheet)# 删除某个工作表
 #del wb[sheet]# 删除某个工作表
+sheet['C1']='good'# 直接给单元格赋值就行
+wb.save("testData1.xlsx")
+sheet['B9']='=AVERAGE(B2:B8)'# B9处写入平均值,读取的时候需要加上data_only=True这样读到B9返回的就是数字，如果不加这个参数，返回的将是公式本身'=AVERAGE(B2:B8)'
+wb.save("testData1.xlsx")
+# 添加一行
+row = [1 ,2, 3, 4, 5]
+sheet.append(row)
 
+# 添加多行
+rows = [
+    ['Number', 'data1', 'data2'],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 10],
+    [6, 25, 5],
+    [7, 50, 10],
+]
+list(zip(*rows))#按列写入
 
+# out
+'''
+[('Number', 2, 3, 4, 5, 6, 7),
+ ('data1', 40, 40, 50, 30, 25, 50),
+ ('data2', 30, 25, 30, 10, 5, 10)]
+ '''
